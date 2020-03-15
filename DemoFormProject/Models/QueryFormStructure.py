@@ -58,9 +58,9 @@ class LoginFormStructure(FlaskForm):
 class UserRegistrationFormStructure(FlaskForm):
     FirstName  = StringField('First name:  ' , validators = [DataRequired()])
     LastName   = StringField('Last name:  ' , validators = [DataRequired()])
-    PhoneNum   = StringField('Phone number:  ' , validators = [DataRequired()])
-    EmailAddr  = StringField('E-Mail:  ' , validators = [DataRequired()])
-    username   = StringField('User name:  ' , validators = [DataRequired()])
+    PhoneNum   = StringField('Phone number:  ' , validators = [DataRequired()])     
+    EmailAddr  = TextField('E-Mail:  ', [validators.Required("please enter your email address"), validators.Email("Please enter your email address.")])
+    username   = TextField('User name:  ' , validators.Required("please enter a password"))
     password   = PasswordField('Pass word:  ' , validators = [DataRequired()])
     submit = SubmitField('Submit')
 
