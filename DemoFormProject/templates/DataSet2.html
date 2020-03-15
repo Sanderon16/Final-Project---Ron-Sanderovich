@@ -1,0 +1,66 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="container" id="myHeader">
+        <div class="row">
+            <h1>{{ title }}.</h1>
+        </div>
+        <div class="row">
+            <h3>{{ message }}.</h3>
+        </div>
+    </div>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+            th:nth-child(1), td:nth-child(1) {
+                background-color: maroon;
+                color: #f1f1f1;
+            }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+        <div id="TextBlock">
+            <p>
+                The gender wage gap is defined as the difference between median earnings of men and women relative to median earnings of men.<br />
+                Data refer to full-time employees on the one hand and to self-employed on the other.
+            </p>
+        </div>
+<hr />
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Explanation</th>
+            </tr>
+            <tr>
+                <td>LOCATION</td>
+                <td>Shows the country of that row in 3 letters</td>
+            </tr>
+            <tr>
+                <td>TIME</td>
+                <td>Shows the year of that row</td>
+            </tr>
+            <tr>
+                <td>VALUE</td>
+                <td>The average wage of that row</td>
+            </tr>
+        </table>
+        <button data-target="#collapse" data-toggle="collapse" class="buttonex">Expand / Collapse</button>
+
+        <div id="collapse" class="collapse">
+            {{ raw_data_table | safe}}
+        </div>
+
+
+
+        {% endblock %}

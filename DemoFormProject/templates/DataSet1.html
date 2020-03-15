@@ -1,0 +1,69 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<div class="container" id="myHeader">
+    <div class="row">
+        <h1>{{ title }}.</h1>
+    </div>
+    <div class="row">
+        <h3>{{ message }}.</h3>
+    </div>
+</div>
+
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+th:nth-child(1), td:nth-child(1) {
+background-color:maroon;
+color:#f1f1f1;
+}
+
+tr:hover {background-color:#f5f5f5;}
+</style>
+
+<div id="TextBlock">
+    <p>
+        Average wages are obtained by dividing the national-accounts-based total wage bill by the average number of employees in the total economy, <br />
+        which is then multiplied by the ratio of the average usual weekly hours per full-time employee to the average usually weekly hours for all employees.<br />
+        This indicator is measured in USD constant prices using 2016 base year and Purchasing Power Parities (PPPs) for private consumption of the same year.
+    </p>
+</div>
+<hr />
+
+<table>
+    <tr>
+        <th>Field</th>
+        <th>Explanation</th>
+    </tr>
+    <tr>
+        <td>LOCATION</td>
+        <td>Shows the country of that row in 3 letters</td>
+    </tr>
+    <tr>
+        <td>TIME</td>
+        <td>Shows the year of that row</td>
+    </tr>
+    <tr>
+        <td>VALUE</td>
+        <td>The average wage of that row</td>
+    </tr>
+</table>
+
+<hr />
+
+<button data-target="#collapse" data-toggle="collapse" class="buttonex">Expand / Collapse</button>
+<br /><br />
+
+<div id="collapse" class="collapse">
+    {{ raw_data_table | safe}}
+</div>
+
+
+        {% endblock %}

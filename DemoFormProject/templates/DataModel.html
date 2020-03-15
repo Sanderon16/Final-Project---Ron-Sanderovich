@@ -1,0 +1,56 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="container" id="myHeader">
+        <div class="row">
+            <h1>{{ title }}.</h1>
+        </div>
+        <div class="row">
+            <h3>{{ message }}.</h3>
+        </div>
+
+    </div>
+
+<style>
+    body {
+        background-image: url('https://s27389.pcdn.co/wp-content/uploads/2019/12/6-reasons-hire-big-data-talent-2020-1024x440.jpeg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+<table style="margin-left:auto;margin-right:auto;">
+    <tr>
+        <th><img src="https://cdn-statics.thebubble.com/wp-content/uploads/genderpaygap.5b0ea8a859465-735x395.jpg" width="250" height="135"> </th>
+        <th><img src="https://www.altres.com/business/wp-content/uploads/2019/04/ALT-STF-B2B-10-Minimum-Wage-Increase-v2.jpg" width="250" height="113"> </th>
+        <th><img src="https://news.blr.com/app/uploads/sites/3/2018/07/Wage-Decline.jpg" width="250" height="167"> </th>
+    </tr>
+</table>
+
+<div id="TextBlock">
+   <p>Now, while scouring the internet looking at different databases, my eyes were opened about huge wagegaps between countries and gender. <br />
+    I had to look into it more; well, my website's data is just the tip of the iceberg to analyze data about a plethera of countries and their gender based wages.<br />
+    From here you can find 2 links to both of the site's databases. <br />
+    The site's databases are: <br />
+    1.    average wage sorted by country. <br />
+    2.      Wage gap between the male and female worker sorted by country. <br /> <br />
+    all data taken from <a href="https://data.oecd.org/earnwage/average-wages.htm"  target="_blank">this website.</a> <br />
+    Links below</p>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <form action="{{ url_for('DataSet1') }}">
+            <button type="submit" class="buttonlink" style="vertical-align:middle"><span>To DataSet 1 </span></button>
+        </form>
+    </div>
+    <div class=" col-lg-4"></div>
+    <div class="col-lg-4">
+        <form action="{{ url_for('DataSet2') }}">
+            <button type="submit" class="buttonlink" style="vertical-align:middle"><span>To DataSet 2 </span></button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}
