@@ -42,7 +42,7 @@ class QueryFormStructure(FlaskForm):
     countries = SelectMultipleField('Select Multiple:', validators = [DataRequired])
     start_date = IntegerField('Start Date:' , [validdate])
     end_date  =  DateField('End Date:' , [validdate])
-    kind = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('line', 'line'), ('bar', 'bar')])
+    kind = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('line'), ('bar')])
     submit = SubmitField('Submit')
 
 

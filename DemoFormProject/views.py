@@ -113,7 +113,7 @@ def Query():
         countries = form.countries.data
         start_date = form.start_date.data
         end_date = form.end_date.data
-
+        kind = form.kind.data
         
         # Filter only the requested countries
         df_avg_countries = df_avg.loc[ countries ]
