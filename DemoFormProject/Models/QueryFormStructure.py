@@ -2,15 +2,27 @@
 ### ----------------------------------------------------------- ###
 ### --- include all software packages and libraries needed ---- ###
 ### ----------------------------------------------------------- ###
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import io
+from os import path
+
+
+
 from datetime import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms import Form, BooleanField, PasswordField
-from wtforms import TextField, TextAreaField, SelectField, DateField
-from wtforms import validators, ValidationError
+from wtforms import Form
+from wtforms import TextField, TextAreaField, SelectField, SelectMultipleField, DateField, DateTimeField
+from wtforms import StringField, PasswordField, HiddenField, SubmitField
+from wtforms import IntegerField, DecimalField, FloatField, RadioField, BooleanField
 
+from wtforms import validators, ValidationError
 from wtforms.validators import DataRequired
+from wtforms.validators import InputRequired
+
+from wtforms.fields.html5 import DateField
 ### ----------------------------------------------------------- ###
 
 
@@ -21,9 +33,20 @@ from wtforms.validators import DataRequired
 ##   the 'name' field - will be used to get the country name
 ##   the 'submit' button - the button the user will press to have the 
 ##                         form be "posted" (sent to the server for process)
+
+def validdate(form, field):
+    if (field.data < 1990 or field.data>2018):
+        raise ValidationError("must be between 1990 and 2018")
+
 class QueryFormStructure(FlaskForm):
-    name   = StringField('Country Name:  ' , validators = [DataRequired()])
+    countries = SelectMultipleField('Select Multiple:', validators = [DataRequired])
+    start_date = IntegerField('Start Date:' , [validdate])
+    end_date  =  DateField('End Date:' , [validdate])
+    kind = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('line', 'line'), ('bar', 'bar')])
     submit = SubmitField('Submit')
+
+
+
 
 
 
@@ -59,8 +82,8 @@ class UserRegistrationFormStructure(FlaskForm):
     FirstName  = StringField('First name:  ' , validators = [DataRequired()])
     LastName   = StringField('Last name:  ' , validators = [DataRequired()])
     PhoneNum   = StringField('Phone number:  ' , validators = [DataRequired()])     
-    EmailAddr  = TextField('E-Mail:  ', [validators.Required("please enter your email address"), validators.Email("Please enter your email address.")])
-    username   = TextField('User name:  ' , validators.Required("please enter a password"))
+    EmailAddr  = StringField('E-Mail:  ' , validators = [DataRequired('Email Address Required.')])
+    username   = TextField('User name:  ' , validators = [DataRequired("please enter a password")])
     password   = PasswordField('Pass word:  ' , validators = [DataRequired()])
     submit = SubmitField('Submit')
 

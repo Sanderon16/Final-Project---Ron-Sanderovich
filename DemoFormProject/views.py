@@ -39,8 +39,13 @@ from DemoFormProject.Models.QueryFormStructure import UserRegistrationFormStruct
 
 ###from DemoFormProject.Models.LocalDatabaseRoutines import IsUserExist, IsLoginGood, AddNewUser 
 
-db_Functions = create_LocalDatabaseServiceRoutines() 
+### my functions:
+from DemoFormProject.Models.DataQuery import plot_to_img
+from DemoFormProject.Models.DataQuery import Get_NormalizedAverageWageDataset
+from DemoFormProject.Models.DataQuery import Convert_StateCode_ToFullName
+from DemoFormProject.Models.DataQuery import get_countries_choices
 
+db_Functions = create_LocalDatabaseServiceRoutines() 
 
 @app.route('/')
 @app.route('/home')
@@ -87,36 +92,51 @@ def Album():
 @app.route('/Query', methods=['GET', 'POST'])
 def Query():
 
-    Name = None
-    Country = ''
-    capital = ''
-    df = pd.read_csv(path.join(path.dirname(__file__), 'static\\Data\\capitals.csv'))
-    df = df.set_index('Country')
-
-    raw_data_table = df.to_html(classes = 'table table-hover')
+    AverageWage_table = ''
+    fig_image = ''
+    df_avg =Get_NormalizedAverageWageDataset()
 
     form = QueryFormStructure(request.form)
      
+    #set default values of dATES to indicate ALL the rows
+    form.start_date.data = df_avg.TIME.min()
+    form.end_date.data = df_avg.TIME.max()
+    minmax = df_avg['TIME']
+
+    #Set the list of states from the data set of all US states
+    form.countries.choices = get_countries_choices()
+
+
     if (request.method == 'POST' ):
-        name = form.name.data
-        Country = name
-        if (name in df.index):
-            capital = df.loc[name,'Capital']
-            raw_data_table = ""
-        else:
-            capital = name + ', no such country'
-        form.name.data = ''
+
+        ##query user parameters
+        countries = form.countries.data
+        start_date = form.start_date.data
+        end_date = form.end_date.data
+
+        
+        # Filter only the requested countries
+        df_avg_countries = df_avg.loc[ countries ]
+        # Filter only the requested Dates
+        df_avg_dates = df_avg_states.loc[lambda df: (df['TIME'] >= start_date) & (df['TIME'] <= end_date)]
+
+        # create plot object ready for graphs
+        fig = plt.figure()
+        ax = fig.add_subplot()
+
+        df_graph = df_avg_countries.groupby('LOCATION').count()
+         
+        df_graph['LOCATION'].plot(ax = ax, kind='barh', grid=True)
+        fig_image = plot_to_img(fig)
 
 
-
-    return render_template('Query.html', 
+    return render_template('query.html', 
             form = form, 
-            name = capital, 
-            Country = Country,
-            raw_data_table = raw_data_table,
-            title='Query by the user',
+            raw_data_table = AverageWage_table,
+            fig_image = fig_image,
+            title='User Data Query',
             year=datetime.now().year,
-            message='This page will use the web forms to get user input'
+            message='Please enter the parameters you choose, to analyze the database'
         )
 
 # -------------------------------------------------------
@@ -155,15 +175,14 @@ def Login():
 
     if (request.method == 'POST' and form.validate()):
         if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
-            flash('Login approved!')
-            #return redirect('<were to go if login is good!')
+            return redirect('DataModel')
         else:
-            flash('Error in - Username and/or password')
+            flash('Incorrect username and/or password.')
    
     return render_template(
-        'login.html', 
+        'login.html',
         form=form, 
-        title='Login to data analysis',
+        title='Login Page',
         year=datetime.now().year,
         repository_name='Pandas',
         )
@@ -178,7 +197,9 @@ def DataModel():
         title='Data Model',
         year=datetime.now().year,
         message='This is my Data Model page that covers the average salary across countries, with varying conditions'
-    )
+        )
+
+
 
 
 @app.route('/DataSet1')

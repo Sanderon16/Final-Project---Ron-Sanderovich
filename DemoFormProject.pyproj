@@ -30,6 +30,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DemoFormProject\Models\DataQuery.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DemoFormProject\Models\LocalDatabaseRoutines.py">
       <SubType>Code</SubType>
     </Compile>
@@ -53,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DemoFormProject\static\Data\AverageWage.csv" />
+    <Content Include="DemoFormProject\static\Data\countries_codes_and_coordinates.csv" />
     <Content Include="DemoFormProject\static\Data\WageGap.csv" />
     <Content Include="DemoFormProject\static\Data\users.csv" />
     <Content Include="DemoFormProject\static\Data\capitals.csv" />
