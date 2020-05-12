@@ -12,7 +12,7 @@ import io
 from os import path
 
 # -------------------------------------------------------------------------------
-# Function to convert a plot to an image that can be integrated into an HTML page
+# Function to convert a plot to an image that can be integrated into an HTML page       
 # -------------------------------------------------------------------------------
 def plot_to_img(fig):
     pngImage = io.BytesIO()
@@ -42,13 +42,11 @@ def Convert_StateCode_ToFullName(df): #doesnt work for some reason i spent 3 hou
 #generates list of all countries
 #
 def get_countries_choices():
-    df_short_state = pd.read_csv(path.join(r'C:\Users\ronsa\Source\Repos\Final-Project---Ron-Sanderovich\DemoFormProject\static\Data\AverageWage.csv'))
+    df_short_state = pd.read_csv(path.join(path.dirname(__file__), "..\\static\\Data\\AverageWage.csv"))
     df1 = df_short_state.groupby('LOCATION').sum()
-    #df_short_state = df_short_state.set_index('Code')
-    #df_short_state = df_short_state.sort_index()
     l = df1.index
-    return l
-
+    m = list(zip(l , l))
+    return m
 
 
 

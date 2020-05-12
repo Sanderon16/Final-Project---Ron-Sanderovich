@@ -1,4 +1,8 @@
 
+
+#Quick note, QueryFormStructure is called like that because changing every single line of code where its mentioned is tedious.
+#The actual name should be FormStructures.
+
 ### ----------------------------------------------------------- ###
 ### --- include all software packages and libraries needed ---- ###
 ### ----------------------------------------------------------- ###
@@ -18,7 +22,8 @@ from wtforms import TextField, TextAreaField, SelectField, SelectMultipleField, 
 from wtforms import StringField, PasswordField, HiddenField, SubmitField
 from wtforms import IntegerField, DecimalField, FloatField, RadioField, BooleanField
 
-from wtforms import validators, ValidationError
+from wtforms import validators
+from wtforms import ValidationError
 from wtforms.validators import DataRequired
 from wtforms.validators import InputRequired
 
@@ -34,15 +39,15 @@ from wtforms.fields.html5 import DateField
 ##   the 'submit' button - the button the user will press to have the 
 ##                         form be "posted" (sent to the server for process)
 
-def validdate(form, field):
-    if (field.data < 1990 or field.data>2018):
-        raise ValidationError("must be between 1990 and 2018")
+#def validdate(form, field):
+#    if (field.data < 1990 or field.data > 2018):
+#        raise ValidationError("must be between 1990 and 2018")
 
 class QueryFormStructure(FlaskForm):
-    countries = SelectMultipleField('Select Multiple:', validators = [DataRequired])
-    start_date = IntegerField('Start Date:' , [validdate])
-    end_date  =  DateField('End Date:' , [validdate])
-    kind = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('line'), ('bar')])
+    countries = SelectMultipleField('Select Multiple:', validators = [DataRequired()])
+    start_date = IntegerField('Start Date:' , validators = [DataRequired()])
+    end_date  =  IntegerField('End Date:' , validators = [DataRequired()])
+#    kind = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('line'), ('bar')])
     submit = SubmitField('Submit')
 
 

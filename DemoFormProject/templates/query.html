@@ -2,23 +2,25 @@
 
 {% block content %}
 
-<h2>{{title}}</h2>
 
-<p>This page will enable the user to input a data field</p>
-
-<div class="row" color:white">
+<div class="row"; background-size:100% 100%; color:white">
     <div class="col-sm-1">
     </div>
     <div class="col-sm-10">
-        <div class="row" ">
+        <div class="row">
+
+            <h2>{{ title }}</h2>    
+
             <br />
         </div>
-        <div class="row" ">
+        <div class="row">
+    
 
             <form method=post>
                 {{ form.csrf }}
                 {{ form.csrf_token }}
                 <table>
+                    
                     <tr>
                         <td>
                             {{ form.countries.label }}
@@ -27,8 +29,8 @@
                             {{ form.countries }}
                         </td>
                         <td>
-                            {% if form.states.errors %}
-                            <ul class="text-danger">{% for error in form.FirstName.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                            {% if form.countries.errors %}
+                            <ul class="text-danger">{% for error in form.countries.errors %}<li>{{ error }}</li>{% endfor %}</ul>
                             {% endif %}
                         </td>
                     </tr>
@@ -41,7 +43,7 @@
                         </td>
                         <td>
                             {% if form.start_date.errors %}
-                            <ul class="text-danger">{% for error in form.FirstName.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                            <ul class="text-danger">{% for error in form.start_date.errors %}<li>{{ error }}</li>{% endfor %}</ul>
                             {% endif %}
                         </td>
                     </tr>
@@ -54,24 +56,11 @@
                         </td>
                         <td>
                             {% if form.end_date.errors %}
-                            <ul class="text-danger">{% for error in form.FirstName.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                            <ul class="text-danger">{% for error in form.end_date.errors %}<li>{{ error }}</li>{% endfor %}</ul>
                             {% endif %}
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>
-                            {{ form.kind.label }}
-                        </td>
-                        <td>
-                            {{ form.kind }}
-                        </td>
-                        <td>
-                            {% if form.kind.errors %}
-                            <ul class="text-danger">{% for error in form.FirstName.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-                            {% endif %}
-                        </td>
-                    </tr>
+                    --!>
                     <tr>
                         <td></td>
                         <td class="input submit"> <input type="submit" value="Caculate"> </td>
@@ -80,6 +69,8 @@
             </form>
         </div>
         <br /><br /><br /><br />
+        
+            
         <div class="row">
             <table>
                 <tr>
@@ -92,14 +83,13 @@
                 </tr>
             </table>
         </div>
-        <br /><br /><br />
+        
+        
     </div>
     <div class="col-sm-1">
     </div>
 </div>
+    </div>
 
 
-
-    {% endblock %}
-
-
+        {% endblock %}

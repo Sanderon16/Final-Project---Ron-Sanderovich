@@ -98,45 +98,41 @@ def Query():
 
     form = QueryFormStructure(request.form)
      
-    #set default values of dATES to indicate ALL the rows
+    #set default values for time to avoid errors
     form.start_date.data = df_avg.TIME.min()
     form.end_date.data = df_avg.TIME.max()
     minmax = df_avg['TIME']
 
-    #Set the list of states from the data set of all US states
+    #Set the list of states from the data set of al
     form.countries.choices = get_countries_choices()
 
 
     if (request.method == 'POST' ):
-
+    
         ##query user parameters
-        countries = form.countries.data
+        countries = ['AUS']
         start_date = form.start_date.data
         end_date = form.end_date.data
-        kind = form.kind.data
-        
-        # Filter only the requested countries
-        df_avg_countries = df_avg.loc[ countries ]
-        # Filter only the requested Dates
-        df_avg_dates = df_avg_states.loc[lambda df: (df['TIME'] >= start_date) & (df['TIME'] <= end_date)]
+    #   kind = form.kind.data
 
-        # create plot object ready for graphs
         fig = plt.figure()
-        ax = fig.add_subplot()
-
-        df_graph = df_avg_countries.groupby('LOCATION').count()
-         
-        df_graph['LOCATION'].plot(ax = ax, kind='barh', grid=True)
-        fig_image = plot_to_img(fig)
-
-
+        
+        for country in countries:
+            #Filter only the requested countries
+            df_avg_countries = df_avg.loc[ country ]
+            # Filter only the requested Dates
+            df_avg_dates = df_avg_countries.loc[lambda df: (df['TIME'] >= start_date) & (df['TIME'] <= end_date)]
+            # create plot object ready for graphs
+            plt.plot( 'TIME', 'Value', data=df_avg_dates, label = country)
+            fig_image = plot_to_img(plt)
+        
     return render_template('query.html', 
             form = form, 
             raw_data_table = AverageWage_table,
             fig_image = fig_image,
             title='User Data Query',
             year=datetime.now().year,
-            message='Please enter the parameters you choose, to analyze the database'
+            message='Please enter the parameters you choose to analyze the database'
         )
 
 # -------------------------------------------------------
