@@ -103,17 +103,16 @@ def Query():
     form.end_date.data = df_avg.TIME.max()
     minmax = df_avg['TIME']
 
-    #Set the list of states from the data set of al
+    #Set the list of countries to choose from
     form.countries.choices = get_countries_choices()
 
 
     if (request.method == 'POST' ):
     
         ##query user parameters
-        countries = ['AUS']
+        countries = form.countries.data
         start_date = form.start_date.data
         end_date = form.end_date.data
-    #   kind = form.kind.data
 
         fig = plt.figure()
         
@@ -122,9 +121,12 @@ def Query():
             df_avg_countries = df_avg.loc[ country ]
             # Filter only the requested Dates
             df_avg_dates = df_avg_countries.loc[lambda df: (df['TIME'] >= start_date) & (df['TIME'] <= end_date)]
-            # create plot object ready for graphs
-            plt.plot( 'TIME', 'Value', data=df_avg_dates, label = country)
-            fig_image = plot_to_img(plt)
+            # adds plot object for requested country in countries
+            plt.plot('TIME', 'Value', data=df_avg_dates, label = country)
+
+        #gives color legend
+        plt.legend(loc='best')        
+        fig_image = plot_to_img(fig)    
         
     return render_template('query.html', 
             form = form, 
