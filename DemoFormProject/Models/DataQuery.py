@@ -33,7 +33,7 @@ def Get_NormalizedAverageWageDataset():
 #----------------------------------------------------------------
 #Function that replaces 3 letter country names by their full name
 #----------------------------------------------------------------
-def Convert_StateCode_ToFullName(df): #doesnt work for some reason i spent 3 hours trying to figure out
+def Convert_StateCode_ToFullName(df): #doesnt work for some reason i spent 3 hours trying to figure out, leaving this code because of my efforts.   
     df_short_state = pd.read_csv(path.join(path.dirname(__file__), "..\\static\\Data\\countries_codes_and_coordinates.csv"))
     s = df_short_state.set_index('Alpha-3 code')['Country']
     return (pd.merge(df, s, how='outer', on=['LOCATION', 'Country']))

@@ -44,9 +44,13 @@ from wtforms.fields.html5 import DateField
 #        raise ValidationError("must be between 1990 and 2018")
 
 class QueryFormStructure(FlaskForm):
+    def my_date_check(form, field):
+        if field.data <1990 and field.data >2018:
+            raise ValidationError('Start date and end date must be between 1980 and 2018')
+
     countries = SelectMultipleField('Select Multiple:', validators = [DataRequired()])
-    start_date = IntegerField('Start Date:' , validators = [DataRequired()])
-    end_date  =  IntegerField('End Date:' , validators = [DataRequired()])
+    start_date = IntegerField('Start Date:' , [DataRequired(), my_date_check])
+    end_date  =  IntegerField('End Date:' , [DataRequired(), my_date_check])
 #    kind = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('line'), ('bar')])
     submit = SubmitField('Submit')
 

@@ -99,20 +99,22 @@ def Query():
     form = QueryFormStructure(request.form)
      
     #set default values for time to avoid errors
-    form.start_date.data = df_avg.TIME.min()
-    form.end_date.data = df_avg.TIME.max()
-    minmax = df_avg['TIME']
+    #form.start_date.data = df_avg.TIME.min()
+    #form.end_date.data = df_avg.TIME.max()
 
     #Set the list of countries to choose from
     form.countries.choices = get_countries_choices()
 
 
     if (request.method == 'POST' ):
-    
+        
+        
         ##query user parameters
         countries = form.countries.data
         start_date = form.start_date.data
         end_date = form.end_date.data
+        
+
 
         fig = plt.figure()
         
